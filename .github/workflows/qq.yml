@@ -18,23 +18,20 @@ on:
 jobs:
   qq-daily:
     runs-on: ubuntu-latest
-    # 强制启用 Node.js 24，彻底消除弃用警告（官方推荐）
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
- 
+
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
- 
+        uses: actions/checkout@v5  # 升级到 v5，原生支持 Node.js24
+
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6  # 升级到 v6，原生支持 Node.js24
         with:
           python-version: '3.11'
           cache: 'pip'
- 
+
       - name: Install dependencies
         run: pip install -r requirements.txt
- 
+
       - name: Run QQ Daily Task
         env:
           QQ_COOKIE: ${{ secrets.QQ_COOKIE }}
@@ -43,7 +40,7 @@ jobs:
           PUSH_KEY: ${{ secrets.PUSH_KEY }}
           PUSH_TYPE: ${{ secrets.PUSH_TYPE }}
         run: python qq_auto.py
- 
+
       - name: Cleanup
         if: always()
         run: echo "Task completed at $(date)"
