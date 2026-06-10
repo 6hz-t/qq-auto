@@ -18,6 +18,9 @@ on:
 jobs:
   qq-daily:
     runs-on: ubuntu-latest
+    # 强制启用 Node.js 24，彻底消除弃用警告（官方推荐）
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
  
     steps:
       - name: Checkout
